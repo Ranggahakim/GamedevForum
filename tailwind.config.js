@@ -1,4 +1,3 @@
-// import url('https://fonts.googleapis.com/css2?family=Jersey+20&display=swap');
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
@@ -14,21 +13,54 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-                jersey: ['"Jersey 20"'],
+                sans: ['Inter', 
+    'ui-sans-serif', 
+    'system-ui', 
+    '-apple-system', 
+    'system-ui', 
+    'Segoe UI', 
+    'Roboto', 
+    'Helvetica Neue', 
+    'Arial', 
+    'Noto Sans', 
+    'sans-serif', 
+    'Apple Color Emoji', 
+    'Segoe UI Emoji', 
+    'Segoe UI Symbol', 
+    'Noto Color Emoji'],
+                'jersey': ['"Jersey 20"'],
+                'body': [
+    'Inter', 
+    'ui-sans-serif', 
+    'system-ui', 
+    '-apple-system', 
+    'system-ui', 
+    'Segoe UI', 
+    'Roboto', 
+    'Helvetica Neue', 
+    'Arial', 
+    'Noto Sans', 
+    'sans-serif', 
+    'Apple Color Emoji', 
+    'Segoe UI Emoji', 
+    'Segoe UI Symbol', 
+    'Noto Color Emoji'
+  ],
 
             },
             colors:{
                 primary: '#007BFF',
                 secondary: '#0056B3',
                 text: '#F4F6F9',
-                bg: '#343A40',
+                bg: '#1A1A1A',
+                post: '#D9D9D9',
                 accent: "#2E2E2E",
                 highlight: '#FFC107'
             }
         },
     },
     plugins: [
-        require('flowbite/plugin')
+        require('flowbite/plugin'),
+        require('flowbite-typography')
     ],
 };

@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Thread;
+use App\Models\Category;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,9 +17,9 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        Thread::factory(50)->recycle([
+            Category::factory(4)->create(),
+            User::factory(5)->create()
+        ])->create();
     }
 }
