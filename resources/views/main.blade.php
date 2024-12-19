@@ -55,7 +55,7 @@
                 </div>
             </section>
             @else
-                <h1 class="text-8xl mb-7 text-text font-jersey ">{{ $title }}</h1>
+                <h1 class="text-8xl mb-7 text-text font-jersey ">{!! $title !!}</h1>
             @endif
 
             

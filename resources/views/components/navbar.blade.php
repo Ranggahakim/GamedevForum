@@ -23,20 +23,23 @@
                     <ul class="py-2" aria-labelledby="user-menu-button">
                         <li>
                             <a href="#"
-                                class="block px-4 py-2 text-sm text-text hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+                                class="block px-4 py-2 text-sm text-text hover:text-primary dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
                         </li>
                         <li>
                             <a href="#"
-                                class="block px-4 py-2 text-sm text-text hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Notification</a>
+                                class="block px-4 py-2 text-sm text-text hover:text-primary dark:hover:bg-gray-600 dark:hover:text-white">Notification</a>
                         </li>
                         <li>
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-text hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Post</a>
+                            <a href="/login"
+                                class="block px-4 py-2 text-sm text-text hover:text-primary dark:hover:bg-gray-600 dark:hover:text-white">Post</a>
                         </li>
                         <li>
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-text hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Log
-                                out</a>
+                            <form action="/logout" method="post">
+                                @csrf
+                                <button
+                                class="block px-4 py-2 w-max text-text hover:text-primary dark:hover:bg-gray-600 dark:hover:text-white">Log
+                                out</button>
+                            </form>
                         </li>
                     </ul>
                 </div>
@@ -61,11 +64,11 @@
                     </li>
                     <li>
                         <a href="#"
-                            class="block py-2 px-3 text-text rounded hover:bg-primary md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Categories</a>
+                            class="block py-2 px-3 text-text rounded hover:text-primary md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Categories</a>
                     </li>
                     <li>
                         <a href="#"
-                            class="block py-2 px-3 text-text rounded hover:bg-primary md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Explore</a>
+                            class="block py-2 px-3 text-text rounded hover:text-primary md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Explore</a>
                     </li>
                 </ul>
             </div>
