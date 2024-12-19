@@ -14,7 +14,9 @@ class Thread extends Model
 {
     use HasFactory;
 
-    public static function find($slug)
+    protected $with = ['author', 'category'];
+
+    public static function findBySlug($slug)
     {
         $thread = Arr::first(static::all(), fn($thread) => $thread['slug'] == $slug);
         
@@ -25,6 +27,7 @@ class Thread extends Model
 
         return $thread;
     }
+
 
     public function author(): BelongsTo
     {

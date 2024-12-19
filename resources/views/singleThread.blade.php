@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Main</title>
+    <title>{{ Str::words($thread->author->name, 1, ('')).' on '. $thread->title }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -26,7 +26,7 @@ URL: https://flowbite.com/docs/components/typography/
                     <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                         <img class="mr-4 w-16 h-16 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Jese Leos">
                         <div>
-                            <a href="#" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">{{ $thread->author->name }}</a>
+                            <a href="/users/{{ $thread->author->username }}" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">{{ $thread->author->name }}</a>
                             <br>
                             <p class="text-base text-gray-500 dark:text-gray-400">{{ $thread->created_at->diffForHumans() }}</p>
                         </div>
