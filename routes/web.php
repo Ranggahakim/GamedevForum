@@ -4,6 +4,7 @@ use App\Models\User;
 use App\Models\Thread;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignupController;
 
@@ -48,3 +49,5 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 
 Route::post('/logout', [LoginController::class, 'logout']);
 
+Route::get('/create', [PostController::class, 'open'])->middleware(('auth'));
+Route::post('/create', [PostController::class, 'post'])->middleware(('auth'));

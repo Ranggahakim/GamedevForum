@@ -13,8 +13,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Thread extends Model
 {
     use HasFactory;
+    
+    protected $fillable = ['title', 'content', 'category_id', 'author_id', 'slug'];
 
     protected $with = ['author', 'category'];
+
 
     public static function findBySlug($slug)
     {

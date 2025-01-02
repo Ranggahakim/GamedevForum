@@ -17,8 +17,8 @@
                 <div class="z-50 hidden my-4 text-base list-none bg-accent divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
                     id="user-dropdown">
                     <div class="px-4 py-3">
-                        <span class="block text-sm font-light text-text dark:text-white">Bonnie Green</span>
-                        <span class="block text-sm  text-text truncate">name@flowbite.com</span>
+                        <span class="block text-sm font-bold text-text dark:text-white">{{ Auth::user()->name }}</span>
+                        <span class="block text-sm italic  text-text truncate">{{ Auth::user()->email }}</span>
                     </div>
                     <ul class="py-2" aria-labelledby="user-menu-button">
                         <li>
@@ -30,7 +30,7 @@
                                 class="block px-4 py-2 text-sm text-text hover:text-primary dark:hover:bg-gray-600 dark:hover:text-white">Notification</a>
                         </li>
                         <li>
-                            <a href="/login"
+                            <a href="/create"
                                 class="block px-4 py-2 text-sm text-text hover:text-primary dark:hover:bg-gray-600 dark:hover:text-white">Post</a>
                         </li>
                         <li>
