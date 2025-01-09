@@ -17,9 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        $this->call([CategorySeeder::class, UserSeeder::class]);
         Thread::factory(50)->recycle([
-            Category::factory(4)->create(),
-            User::factory(5)->create()
+            Category::all(),
+            User::all()
         ])->create();
     }
 }

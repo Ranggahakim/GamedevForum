@@ -16,7 +16,7 @@ class PostController extends Controller
         $categories = Category::all();
 
         // return $categories;
-        return view('/create', ['pageTitle' => 'Create A Thread!', 'categories' => $categories]);
+        return view('/create', ['pageTitle' => 'Create A Thread!', 'categories' => $categories, 'status' => 'create']);
     }
 
     public function post(Request $request)
@@ -33,5 +33,25 @@ class PostController extends Controller
         Thread::create($validatedData);
 
         return redirect("threads/". $validatedData['slug']);
+    }
+
+    public function update(Thread $thread, Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'category_id' => 'required',
+            'content' => 'required'
+        ]);
+
+        Thread::where('id', $thread->id)
+        ->update($validatedData);
+
+        return redirect('threads/'. $thread->slug);
+    }
+
+    public function remove(Thread $thread)
+    {
+        Thread::destroy($thread->id);
+        return redirect('/MyProfile');
     }
 }

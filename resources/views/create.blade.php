@@ -14,8 +14,54 @@
 
     <hr>
     
-    <section class="bg-bg dark:bg-gray-900 h-dvh">
+    <section class="bg-bg text-text dark:bg-gray-900 h-dvh">
         <div class=" mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+
+            @if ($status == 'edit')
+            <a href="/threads/{{ $thread->slug }}" class="italic text-lg hover:underline no-underline"><< back</a>
+
+                <div class="my-3">
+                    <h1 class="font-jersey text-4xl">Edit Thread</h1>
+                </div>
+
+            <form action="/threads/{{ $thread->slug }}/edit" method="post">
+                @csrf
+                <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                    <input type="text" hidden name="author_id">
+                    <input type="text" hidden name="slug">
+                    <div class="sm:col-span-2">
+                        <label for="title" class="block mb-2 text-sm font-medium text-text">Title</label>
+                        <input type="text" name="title" id="title" class="bg-gray-50 text-gray-900 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500" value="{{ $thread->title }}" required="">
+                    </div>
+                    <div>
+                        <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                        <select id="category" name="category_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                            <option selected="{{ $thread->category->name }}">{{ $thread->category->name }}</option>
+                            @foreach ($categories as $category)
+                                @if ($category->name == $thread->category->name)
+                                    @continue
+                                @endif    
+                            <option value={{ $category->id }}>{{ $category->name }}</option>
+                                
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label for="description" class="block mb-2 text-sm font-medium text-text">Content</label>
+                        <textarea id="description"
+                        name="content" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Your content here..." required="">{{ $thread->content }}</textarea>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <button type="submit" class="w-full text-white bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                        Update Thread
+                    </button>
+                </div>
+            </form>
+
+            @elseif ($status == 'create')
+
+            Post Thread
             <form action="/create" method="post">
                 @csrf
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
@@ -45,6 +91,9 @@
                     </button>
                 </div>
             </form>
+            @endif
+            
+            
         </div>
       </section>
 </body>
