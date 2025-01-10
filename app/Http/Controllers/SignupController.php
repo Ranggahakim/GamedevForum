@@ -25,9 +25,10 @@ class SignupController extends Controller
             'password' => 'required|min:5|max:255',
         ]);
 
+        $validatedData['isAdmin'] = 0;
         $validatedData['password'] = Hash::make($validatedData['password']);
         
-        return $validatedData;
+        // return $validatedData;
 
         User::create($validatedData);
 
@@ -41,12 +42,13 @@ class SignupController extends Controller
         // return $request;
 
         $validatedData =  $request->validate([
-            'bio' => 'required'
+            'bio' => 'required',
+            'username' => ['required, max:255, min:3, unique:users']
         ]);
 
-        if(Auth::user()->username != $request['username'])
+        if(Auth::user()->username == $request['username'])
         {
-            $validatedData['username'] =  'required, max:255, min:3, unique:users';
+            $validatedData = Auth::user()->username;
         }
 
         User::where('id', Auth::id())

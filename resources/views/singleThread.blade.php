@@ -10,7 +10,7 @@
 </head>
 
 <body class="font-sans">
-    <x-navbar></x-navbar>
+    <x-navbar :categories="$categories"></x-navbar>
 
     <!-- 
 Install the "flowbite-typography" NPM package to apply styles and format the article content: 
@@ -39,6 +39,9 @@ URL: https://flowbite.com/docs/components/typography/
                     Edit</button></a>
                 <a href="/threads/{{ $thread->slug }}/remove"><button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                     Remove Thread</button></a>
+                @else
+                <a href="/threads/{{ $thread->slug }}/report"><button type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    Report</button></a>
                 @endif
 
                 <h1 class="mb-4 text-3xl font-extrabold leading-tight text-text lg:mb-6 lg:text-4xl dark:text-white">{{ $thread->title }}</h1>

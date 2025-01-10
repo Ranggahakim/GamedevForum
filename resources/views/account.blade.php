@@ -10,11 +10,11 @@
 </head>
 
 <body class="font-sans">
-    <x-navbar></x-navbar>
+    <x-navbar :categories="$categories"></x-navbar>
 
     <hr>
     
-    <section class="bg-bg dark:bg-gray-900">
+    <section class="bg-bg dark:bg-gray-900 min-h-screen">
         @if ($status == 'view')
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
             <section class=" dark:bg-gray-900 w-1/2 mx-auto">

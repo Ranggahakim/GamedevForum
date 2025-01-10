@@ -1,3 +1,5 @@
+@props(['categories'])
+
 <div>
     <nav class="bg-bg text-text dark:bg-gray-900 ">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -21,18 +23,17 @@
                         <span class="block text-sm italic  text-text truncate">{{ Auth::user()->email }}</span>
                     </div>
                     <ul class="py-2" aria-labelledby="user-menu-button">
-                        <li>
-                            <a href="/MyProfile"
-                                class="block px-4 py-2 text-sm text-text hover:text-primary dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-text hover:text-primary dark:hover:bg-gray-600 dark:hover:text-white">Notification</a>
-                        </li>
-                        <li>
-                            <a href="/create"
-                                class="block px-4 py-2 text-sm text-text hover:text-primary dark:hover:bg-gray-600 dark:hover:text-white">Post</a>
-                        </li>
+                        @if (Auth::user()->isAdmin == false)
+                            <li>
+                                <a href="/MyProfile"
+                                    class="block px-4 py-2 text-sm text-text hover:text-primary dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+                            </li>
+                            <li>
+                                <a href="/create"
+                                    class="block px-4 py-2 text-sm text-text hover:text-primary dark:hover:bg-gray-600 dark:hover:text-white">Post</a>
+                            </li>
+                            
+                        @endif
                         <li>
                             <form action="/logout" method="post">
                                 @csrf
@@ -59,17 +60,37 @@
                     class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
                     <li>
                         <a href="/"
-                            class="block py-2 px-3 text-text bg-primary rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
-                            aria-current="page">Home</a>
+                            class="block py-2 px-3 text-textrounded md:bg-transparent md:p-0 md:dark:text-blue-500 {{ request()->is('home') ? 'text-primary' : 'text-text' }} "
+                            aria-current="{{ request()->routeIs('/') ? 'page' : false }}">Home</a>
                     </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-text rounded hover:text-primary md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Categories</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block py-2 px-3 text-text rounded hover:text-primary md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Explore</a>
-                    </li>
+                    @if (Auth::user()->isAdmin == false)
+                        <li>
+                            <div class="flex items-center w-full space-x-3 md:w-auto">
+                            <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
+                                class="block py-2 px-3 {{ request()->is('categories') ? 'text-primary' : 'text-text' }} rounded hover:text-primary md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                aria-current="{{ request()->is('categories') ? 'page' : false }}">Categories</button>
+                                    
+                                    <div id="actionsDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                                      <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="actionsDropdownButton">
+                                        @foreach ($categories as $category)
+                                        <li>
+                                            <a href="/categories/{{ $category->slug }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $category->name }}</a>
+                                          </li>
+                                        @endforeach
+                                      </ul>
+                                    </div>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block py-2 px-3 text-text rounded hover:text-primary md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Explore</a>
+                        </li>
+                    @else
+                        <li>
+                            <a href="/reportedThread"
+                                class=" {{ request()->routeIs('reportedThread') ? 'text-primary' : 'text-text' }} block py-2 px-3 rounded hover:text-primary md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                                aria-current="{{ request()->routeIs('reportedThread') ? 'page' : false }}">Reported</a>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>

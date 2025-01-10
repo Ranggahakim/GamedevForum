@@ -21,6 +21,18 @@ class UserSeeder extends Seeder
             'password' => Hash::make('1234567890'),
             'email_verified_at' => now(),
             'bio' => "Terkena Penyakit Balatro Gila",
+            'isAdmin' => 0,
+            'remember_token' => 'rangga123'
+        ]);
+        
+        User::create([
+            'name' => 'admin',
+            'username' => 'admin',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('admin'),
+            'email_verified_at' => now(),
+            'bio' => "dia ini admin",
+            'isAdmin' => 1,
             'remember_token' => 'rangga123'
         ]);
 

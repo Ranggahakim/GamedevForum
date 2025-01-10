@@ -16,37 +16,60 @@ Route::get('/', function()
 
 Route::get('/home', function () 
 {
-    $threads = Thread::latest()->get();
+    $threads = Thread::latest();
+    $categories = Category::all();
 
-    return view('main', ['pageTitle' => 'Home Page', 'title' => 'Welcome to <br> Home Page', 'threads' => $threads, 'newestThread' => Thread::latest()->first()]);
+    if(request('search'))
+    {
+        $threads->where('title', 'like', '%' . request('search') . '%')
+        ->orWhereHas('author', function ($q) {
+            $q->where('name', 'like', '%' . request('search') . '%');
+        });
+    }
+    return view('main', ['pageTitle' => 'Home Page', 'title' => 'Welcome to <br> Home Page', 'threads' => $threads->get(), 'newestThread' => Thread::latest()->first(), 'categories' => $categories]);
+
 })->middleware(('auth'));
+
+Route::get('/reportedThread', function () 
+{
+    $threads = Thread::has('reports')->get();
+    $categories = Category::all();
+
+    return view('main', ['pageTitle' => 'Reported Page', 'title' => 'Welcome to <br> Home Page', 'threads' => $threads, 'newestThread' => Thread::latest()->first(), 'categories' => $categories]);
+
+})->middleware(('auth'))->name('reportedThread');
 
 Route::get('/threads/{slug}', function($slug)
 {
     $thread = Thread::findBySlug($slug);
+    $categories = Category::all();
 
-    return view('singleThread', ['thread' => $thread]);
+    return view('singleThread', ['thread' => $thread, 'categories' => $categories]);
 });
 
 Route::get('/author/{user:username}', function(User $user)
 {
     $threads = $user->threads;
+    $categories = Category::all();
 
-    return view('main', ['pageTitle' => 'User : '. $user->name, 'title' => 'Threads by <br>'. $user->name, 'threads' => $threads]);
+    return view('main', ['pageTitle' => 'User : '. $user->name, 'title' => 'Threads by <br>'. $user->name, 'threads' => $threads, 'categories' => $categories]);
 });
 
 Route::get('/categories/{category:slug}', function(Category $category)
 {
     $threads = $category->threads;
+    $categories = Category::all();
 
-    return view('main', ['pageTitle' => 'Category : '. $category->name, 'title' => 'Searching on '. $category->name, 'threads' => $threads]);
-});
+    return view('main', ['pageTitle' => 'Category : '. $category->name, 'title' => 'Searching on '. $category->name, 'threads' => $threads, 'categories' => $categories]);
+})->name('categories');
 
 Route::get('/MyProfile', function()
 {
     $user = Auth::user();
+    $categories = Category::all();
 
-    return view('account', ['pageTitle' => 'My Profile', 'title' => 'Threads by <br>'. $user->name, 'threads' => $user->threads, 'status' => 'view']);
+
+    return view('account', ['pageTitle' => 'My Profile', 'title' => 'Threads by <br>'. $user->name, 'threads' => $user->threads, 'status' => 'view', 'categories' => $categories]);
 });
 
 Route::post('/MyProfile', [SignupController::class, 'update']);
@@ -54,8 +77,9 @@ Route::post('/MyProfile', [SignupController::class, 'update']);
 Route::get('/MyProfile/edit', function()
 {
     $user = Auth::user();
+    $categories = Category::all();
 
-    return view('account', ['pageTitle' => 'Edit Profile', 'status' => 'edit']);
+    return view('account', ['pageTitle' => 'Edit Profile', 'status' => 'edit', 'categories' => $categories]);
 });
 
     
@@ -80,3 +104,5 @@ Route::get('/threads/{thread:slug}/edit', function(Thread $thread)
 
 Route::post('/threads/{thread:slug}/edit', [PostController::class, 'update'])->middleware(('auth'));
 Route::get('/threads/{thread:slug}/remove', [PostController::class, 'remove'])->middleware(('auth'));
+
+Route::get('/threads/{thread:slug}/report', [PostController::class, 'report'])->middleware(('auth'));

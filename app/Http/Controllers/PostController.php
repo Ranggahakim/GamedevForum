@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Report;
 use App\Models\Thread;
 use App\Models\Category;
 use Illuminate\Support\Str;
@@ -51,7 +52,18 @@ class PostController extends Controller
 
     public function remove(Thread $thread)
     {
+        Report::where('thread_id', $thread->id)->delete();
         Thread::destroy($thread->id);
-        return redirect('/MyProfile');
+        return redirect('/');
+    }
+
+    public function report(Thread $thread)
+    {
+
+        $validatedData['thread_id'] = $thread->id;
+
+        Report::create($validatedData);
+
+        return redirect("threads/". $thread->slug);
     }
 }
